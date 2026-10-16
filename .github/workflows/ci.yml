@@ -1,0 +1,41 @@
+name: validate
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  catalog-and-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - name: Validate catalog and compile Python
+        run: make validate
+      - name: Run unit tests
+        run: make test
+
+  qml:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - name: Install headless Qt system library
+        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y libegl1
+      - name: Install the declared Qt runtime
+        run: python -m pip install --disable-pip-version-check PySide6
+      - name: Lint QML
+        run: pyside6-qmllint src/lokro_store/qml/Main.qml
+      - name: Load and render the real interface
+        env:
+          PYTHONPATH: src
+          QT_QPA_PLATFORM: offscreen
+          QT_QUICK_BACKEND: software
+        run: python scripts/render_screenshot.py

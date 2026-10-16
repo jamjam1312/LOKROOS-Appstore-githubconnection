@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=LOKRO Store
+Name[de]=LOKRO Store
+Comment=Browse reviewed applications and design packs
+Comment[de]=Geprüfte Apps und Design-Packs entdecken
+Exec=lokro-store
+Icon=lokro-store
+Terminal=false
+Categories=System;PackageManager;
+Keywords=apps;flatpak;store;design;themes;
+StartupNotify=true
