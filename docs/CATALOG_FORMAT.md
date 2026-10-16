@@ -25,6 +25,13 @@ Valid alpha-1 install methods are:
 {"method": "builtin"}
 ```
 
+```json
+{"method": "project-link", "url": "https://github.com/example/project/releases/latest"}
+```
+
+`project-link` is for promising but not yet packaged or reviewed alpha software.
+It opens a credential-free HTTPS page and never downloads or executes a file.
+
 App entries should prefer an upstream-maintained/verified Flatpak. The catalog
 may link to GitHub, but it must not transform a GitHub URL into an executable
 installer. Icons go under `assets/icons/` with source and license notes in

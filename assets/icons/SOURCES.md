@@ -1,5 +1,14 @@
 # Icon sources
 
+## ArtCraft Launcher
+
+- File: `artcraft-launcher.svg`
+- Source: `storytold/craft-launcher`,
+  `assets/app-icon/hicolor/scalable/apps/ai.storyteller.artcraft-launcher.svg`
+- Upstream revision observed: `307efcf45a080af9643e750d43034eb25540cef8`
+- License: MIT OR Apache-2.0
+- Copyright: ArtCraft Team and ArtCraft Launcher contributors
+
 Application icons in this directory are fetched from the corresponding Flathub
 AppStream records on 2026-10-16. They are included only to identify the listed
 applications. Copyright, icon licenses and trademarks remain with each

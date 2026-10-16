@@ -90,10 +90,10 @@ ApplicationWindow {
                     }
                 }
                 Rectangle { Layout.fillWidth: true; height: 1; color: window.line }
-                Label { text: "ALPHA 1"; color: window.muted; font.pixelSize: 11 }
+                Label { text: "ALPHA 3"; color: window.muted; font.pixelSize: 11 }
                 Label {
                     Layout.fillWidth: true
-                    text: "Apps via Flathub. Designs folgen nach Prüfung."
+                    text: "Flathub-Apps und geprüfte Projektvorschauen. Designs folgen nach Prüfung."
                     color: window.muted
                     wrapMode: Text.WordWrap
                     font.pixelSize: 12

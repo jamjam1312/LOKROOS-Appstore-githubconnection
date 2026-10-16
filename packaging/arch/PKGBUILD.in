@@ -26,4 +26,5 @@ package() {
   install -Dm644 assets/lokro-store.svg "$pkgdir/usr/share/icons/hicolor/scalable/apps/lokro-store.svg"
   install -d "$pkgdir/usr/share/lokro-store/assets/icons"
   cp -a assets/icons/*.png "$pkgdir/usr/share/lokro-store/assets/icons/"
+  cp -a assets/icons/*.svg "$pkgdir/usr/share/lokro-store/assets/icons/"
 }

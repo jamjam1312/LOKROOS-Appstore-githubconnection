@@ -114,11 +114,14 @@ class StoreBackend(QObject):
         method = item["install"]["method"]
         row["actionText"] = (
             "Installiert" if method == "builtin" else
+            "Projekt öffnen" if method == "project-link" else
             "Systemweit installiert" if scope == "system" else
             "Aktualisieren" if row["installed"] else
             "Installieren"
         )
-        row["actionEnabled"] = method == "flatpak" and scope != "system"
+        row["actionEnabled"] = (
+            method == "project-link" or (method == "flatpak" and scope != "system")
+        )
         return row
 
     def _rebuild(self) -> None:
@@ -179,6 +182,12 @@ class StoreBackend(QObject):
             return
         try:
             item = self._find(item_id)
+            if item["install"]["method"] == "project-link":
+                self.openUrl(item["install"]["url"])
+                self._set_message(
+                    "Offizielle Projektseite geöffnet; diese Alpha installiert keine ungeprüften Binärdateien."
+                )
+                return
             scope = installation_scope(item)
             if scope == "system":
                 raise InstallError("systemweit installierte Flatpaks werden in dieser Alpha nicht verändert")

@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.0-alpha.3
+
+- Add the official ArtCraft Launcher as a clearly marked experimental suite.
+- Add a safe `project-link` action that only opens validated HTTPS pages.
+- Replace competitor-brand comparison labels with neutral functional wording.
+- Keep all established Flathub applications and offline catalog data intact.
+
 ## 0.1.0-alpha.2
 
 - Correct the official Arch dependency name from `python-pyside6` to `pyside6`.

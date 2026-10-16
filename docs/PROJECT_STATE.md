@@ -26,12 +26,16 @@ straightforward to browse and useful offline with bundled metadata.
 - Corrected the Arch dependency name to the official `pyside6` package and
   separated Arch's hyphen-free `pkgver` from the SemVer Git tag in the package
   template. This correction is intended for the alpha-2 tag used by LOKRO OS.
+- Tagged and merged alpha 1 and alpha 2, then integrated the ArtCraft Launcher
+  as a neutral, clearly marked experimental suite preview for alpha 3.
+- Added `project-link`: a validation-only action that opens an official HTTPS
+  release page but cannot download or execute catalog-supplied code.
 
 ## Still to do
 
 - Run the Linux UI and capture final screenshots in an Arch/KDE environment.
-- Review and merge the alpha-1 pull request.
-- Tag an app-store release and pin that release in the LOKRO OS build.
+- Review, merge and tag alpha 3, then pin that exact release and checksum in
+  the LOKRO OS build.
 - Add real design packs after the user supplies artwork. Each pack must pass
   the LOKRO validator and include license/author metadata.
 - Decide whether an opt-in proprietary category (for example Steam) belongs in
