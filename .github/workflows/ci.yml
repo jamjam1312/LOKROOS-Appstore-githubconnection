@@ -1,0 +1,30 @@
+name: validate
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  catalog-and-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Validate catalog and compile Python
+        run: make validate
+      - name: Run unit tests
+        run: make test
+
+  qml:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install QML lint
+        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y qt6-declarative-dev-tools
+      - name: Lint QML
+        run: qmllint src/lokro_store/qml/Main.qml

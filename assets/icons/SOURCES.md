@@ -1,0 +1,23 @@
+# Icon sources
+
+Application icons in this directory are fetched from the corresponding Flathub
+AppStream records on 2026-10-16. They are included only to identify the listed
+applications. Copyright, icon licenses and trademarks remain with each
+upstream project; listing is not endorsement.
+
+| File | Project | Project license | AppStream API |
+| --- | --- | --- | --- |
+| `gimp.png` | GIMP | GPL-3.0+ and LGPL-3.0+ | `org.gimp.GIMP` |
+| `krita.png` | Krita | GPL-3.0-only | `org.kde.krita` |
+| `inkscape.png` | Inkscape | GPL-2.0-or-later | `org.inkscape.Inkscape` |
+| `kdenlive.png` | Kdenlive | GPL-3.0-only | `org.kde.kdenlive` |
+| `blender.png` | Blender | GPL-3.0 | `org.blender.Blender` |
+| `darktable.png` | darktable | GPL-3.0+ | `org.darktable.Darktable` |
+| `audacity.png` | Audacity | GPL-3.0-only | `org.audacityteam.Audacity` |
+| `libreoffice.png` | LibreOffice | MPL-2.0 | `org.libreoffice.LibreOffice` |
+| `vlc.png` | VLC | GPL-2.0+ | `org.videolan.VLC` |
+| `prismlauncher.png` | Prism Launcher | GPL-3.0-only | `org.prismlauncher.PrismLauncher` |
+| `obs.png` | OBS Studio | GPL-2.0-or-later | `com.obsproject.Studio` |
+
+The LOKRO Store icon (`lokro-store.svg`) is original repository artwork under
+CC0-1.0.

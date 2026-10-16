@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lokro-store"
+version = "0.1.0a1"
+description = "Safe, reviewable application and design catalog for LOKRO OS"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "CC0-1.0"}
+authors = [{name = "LOKRO OS contributors"}]
+dependencies = ["PySide6>=6.7"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: X11 Applications :: Qt",
+  "License :: CC0 1.0 Universal (CC0 1.0) Public Domain Dedication",
+  "Operating System :: POSIX :: Linux",
+  "Programming Language :: Python :: 3",
+]
+
+[project.scripts]
+lokro-store = "lokro_store.app:main"
+
+[project.urls]
+Repository = "https://github.com/jamjam1312/LOKROOS-Appstore-githubconnection"
+Issues = "https://github.com/jamjam1312/LOKROOS-Appstore-githubconnection/issues"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+lokro_store = ["qml/*.qml"]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]

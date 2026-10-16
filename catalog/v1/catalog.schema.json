@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/jamjam1312/LOKROOS-Appstore-githubconnection/raw/main/catalog/v1/catalog.schema.json",
+  "title": "LOKRO Store catalog v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "generatedAt", "repository", "items"],
+  "properties": {
+    "$schema": {"type": "string"},
+    "schemaVersion": {"const": 1},
+    "generatedAt": {"type": "string", "format": "date-time"},
+    "repository": {"type": "string", "format": "uri", "pattern": "^https://"},
+    "items": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/item"}
+    }
+  },
+  "$defs": {
+    "item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "name", "summary", "description", "categories", "icon", "homepage", "source", "license", "featured", "install"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+        "kind": {"enum": ["application", "design-pack", "cursor", "theme", "wallpaper"]},
+        "name": {"type": "string", "minLength": 1, "maxLength": 80},
+        "summary": {"type": "string", "minLength": 1, "maxLength": 120},
+        "description": {"type": "string", "minLength": 1, "maxLength": 600},
+        "categories": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1, "maxLength": 40}},
+        "icon": {"type": "string", "pattern": "^assets/icons/[A-Za-z0-9._-]+$"},
+        "homepage": {"type": "string", "format": "uri", "pattern": "^https://"},
+        "source": {"type": "string", "format": "uri", "pattern": "^https://"},
+        "license": {"type": "string", "minLength": 1, "maxLength": 120},
+        "featured": {"type": "boolean"},
+        "install": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["method", "remote", "ref"],
+              "properties": {
+                "method": {"const": "flatpak"},
+                "remote": {"const": "flathub"},
+                "ref": {"type": "string", "pattern": "^[A-Za-z0-9_-]+(?:\\.[A-Za-z0-9_-]+){2,}$"}
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["method", "url", "sha256"],
+              "properties": {
+                "method": {"const": "lokro-design-pack"},
+                "url": {"type": "string", "pattern": "^https://.+\\.lokrodesign$"},
+                "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["method"],
+              "properties": {"method": {"const": "builtin"}}
+            }
+          ]
+        }
+      }
+    }
+  }
+}

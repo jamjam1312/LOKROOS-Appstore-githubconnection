@@ -1,0 +1,28 @@
+# Replace @VERSION@ and @SHA256@ from a tagged source release before building.
+pkgname=lokro-store
+pkgver=@VERSION@
+pkgrel=1
+pkgdesc='Safe application and design catalog for LOKRO OS'
+arch=('any')
+url='https://github.com/jamjam1312/LOKROOS-Appstore-githubconnection'
+license=('CC0-1.0')
+depends=('python' 'python-pyside6' 'flatpak')
+makedepends=('python-build' 'python-installer' 'python-wheel')
+source=("$pkgname-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz")
+sha256sums=('@SHA256@')
+
+build() {
+  cd "LOKROOS-Appstore-githubconnection-$pkgver"
+  python -m build --wheel --no-isolation
+}
+
+package() {
+  cd "LOKROOS-Appstore-githubconnection-$pkgver"
+  python -m installer --destdir="$pkgdir" dist/*.whl
+  install -Dm644 catalog/v1/catalog.json "$pkgdir/usr/share/lokro-store/catalog/v1/catalog.json"
+  install -Dm644 catalog/v1/catalog.schema.json "$pkgdir/usr/share/lokro-store/catalog/v1/catalog.schema.json"
+  install -Dm644 packaging/linux/org.lokro.Store.desktop "$pkgdir/usr/share/applications/org.lokro.Store.desktop"
+  install -Dm644 assets/lokro-store.svg "$pkgdir/usr/share/icons/hicolor/scalable/apps/lokro-store.svg"
+  install -d "$pkgdir/usr/share/lokro-store/assets/icons"
+  cp -a assets/icons/*.png "$pkgdir/usr/share/lokro-store/assets/icons/"
+}
