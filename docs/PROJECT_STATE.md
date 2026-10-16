@@ -22,7 +22,7 @@ straightforward to browse and useful offline with bundled metadata.
 - Opened pull request #1. Ubuntu's older distribution `qmllint` produced false
   type-resolution failures for the newer PySide runtime. CI now installs the
   declared PySide6 runtime, runs its matching linter and loads/renders the real
-  interface offscreen.
+  interface offscreen with Ubuntu's minimal EGL runtime.
 
 ## Still to do
 
