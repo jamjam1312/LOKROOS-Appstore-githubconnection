@@ -19,9 +19,10 @@ straightforward to browse and useful offline with bundled metadata.
 - Added initial open-source productivity and creative applications.
 - Added repository instructions, security documentation, tests, CI and Arch
   packaging metadata.
-- Opened pull request #1. The first QML CI attempt exposed Ubuntu's non-PATH
-  Qt tool location and required QML runtime modules; the workflow now installs
-  those modules and invokes `/usr/lib/qt6/bin/qmllint`.
+- Opened pull request #1. Ubuntu's older distribution `qmllint` produced false
+  type-resolution failures for the newer PySide runtime. CI now installs the
+  declared PySide6 runtime, runs its matching linter and loads/renders the real
+  interface offscreen.
 
 ## Still to do
 

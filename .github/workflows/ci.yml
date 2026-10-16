@@ -24,13 +24,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - name: Install QML lint
-        run: >-
-          sudo apt-get update && sudo apt-get install --no-install-recommends -y
-          qt6-declarative-dev-tools
-          qml6-module-qtquick
-          qml6-module-qtquick-controls
-          qml6-module-qtquick-layouts
-          qml6-module-qtquick-window
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - name: Install the declared Qt runtime
+        run: python -m pip install --disable-pip-version-check PySide6
       - name: Lint QML
-        run: /usr/lib/qt6/bin/qmllint src/lokro_store/qml/Main.qml
+        run: pyside6-qmllint src/lokro_store/qml/Main.qml
+      - name: Load and render the real interface
+        env:
+          PYTHONPATH: src
+          QT_QPA_PLATFORM: offscreen
+          QT_QUICK_BACKEND: software
+        run: python scripts/render_screenshot.py
