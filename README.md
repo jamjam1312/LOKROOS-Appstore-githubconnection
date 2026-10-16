@@ -12,13 +12,16 @@ The first alpha deliberately keeps installation rules small and auditable:
 - catalog entries link to their upstream source repositories and licenses;
 - arbitrary shell commands, `curl | sh`, AUR helpers and unverified binaries
   are not supported;
+- early upstream projects may appear as clearly marked `project-link` entries;
+  those open the official release page but never auto-install a download;
 - future design packs use checksum-pinned `.lokrodesign` archives and the
   user-scoped `lokro-design-pack` validator from LOKRO OS.
 
 The bundled catalog starts with open-source alternatives for image editing,
 drawing, video, audio, office work, streaming and Minecraft launching. The
 program has search, category filters, featured items, installation state and
-install/update actions.
+install/update actions. The experimental ArtCraft Launcher entry exposes its
+unified creative/office suite without replacing the established applications.
 
 ## Run from source
 

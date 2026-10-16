@@ -22,6 +22,8 @@ first tagged release.
 
 - Flatpak is the portable application source for alpha 1.
 - The source repository URL is metadata, not an executable download URL.
+- `project-link` entries are informational early-access cards. They may open
+  an official HTTPS release page but may not download or execute binaries.
 - App icons are committed for offline browsing and separately attributed.
 - Design, cursor, theme and wallpaper sections are represented in the schema.
   Remote design installation is enabled only for checksum-pinned
@@ -29,6 +31,8 @@ first tagged release.
 - The UI is PySide6 + QML to stay native-looking on KDE without creating a new
   desktop environment.
 - The app-store catalog can evolve independently from the large ISO.
+- ArtCraft is intentionally marked experimental; established Flathub entries
+  remain available and are not replaced by that suite.
 
 Read `AGENTS.md`, `docs/SECURITY.md`, `docs/CATALOG_FORMAT.md` and
 `docs/PROJECT_STATE.md` before changing installation behavior.

@@ -59,6 +59,15 @@
               "additionalProperties": false,
               "required": ["method"],
               "properties": {"method": {"const": "builtin"}}
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["method", "url"],
+              "properties": {
+                "method": {"const": "project-link"},
+                "url": {"type": "string", "format": "uri", "pattern": "^https://"}
+              }
             }
           ]
         }

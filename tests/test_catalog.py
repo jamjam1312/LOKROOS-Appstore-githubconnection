@@ -21,8 +21,18 @@ class CatalogTests(unittest.TestCase):
         self.assertGreaterEqual(len(ids), 10)
 
     def test_search_matches_categories_and_description(self) -> None:
-        self.assertIn("gimp", {item["id"] for item in filter_items(self.catalog["items"], "photoshop")})
+        self.assertIn("gimp", {item["id"] for item in filter_items(self.catalog["items"], "bildbearbeitung")})
         self.assertIn("libreoffice", {item["id"] for item in filter_items(self.catalog["items"], category="Büro")})
+        self.assertIn("artcraft-launcher", {item["id"] for item in filter_items(self.catalog["items"], "wordcraft")})
+
+    def test_project_link_is_https_and_never_a_shell_command(self) -> None:
+        item = next(item for item in self.catalog["items"] if item["id"] == "artcraft-launcher")
+        self.assertEqual(item["install"]["method"], "project-link")
+        self.assertTrue(item["install"]["url"].startswith("https://github.com/storytold/"))
+        candidate = copy.deepcopy(self.catalog)
+        candidate["items"][-1]["install"]["url"] = "file:///tmp/payload"
+        with self.assertRaises(CatalogError):
+            validate_catalog(candidate)
 
     def test_unknown_install_method_is_rejected(self) -> None:
         candidate = copy.deepcopy(self.catalog)

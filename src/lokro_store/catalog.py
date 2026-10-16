@@ -77,6 +77,12 @@ def _validate_install(value: Any, kind: str) -> dict[str, str]:
     elif method == "builtin":
         if set(value) != {"method"}:
             raise CatalogError("builtin install has unknown fields")
+    elif method == "project-link":
+        if set(value) != {"method", "url"}:
+            raise CatalogError("project-link has unknown or missing fields")
+        if kind != "application":
+            raise CatalogError("project-link is allowed only for applications")
+        _https(value.get("url"), "install.url")
     else:
         raise CatalogError(f"unsupported install method: {method!r}")
     return dict(value)
