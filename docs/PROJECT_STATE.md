@@ -20,7 +20,8 @@ straightforward to browse and useful offline with bundled metadata.
 - Added repository instructions, security documentation, tests, CI and Arch
   packaging metadata.
 - Opened pull request #1. The first QML CI attempt exposed Ubuntu's non-PATH
-  Qt tool location; the workflow now invokes `/usr/lib/qt6/bin/qmllint`.
+  Qt tool location and required QML runtime modules; the workflow now installs
+  those modules and invokes `/usr/lib/qt6/bin/qmllint`.
 
 ## Still to do
 
