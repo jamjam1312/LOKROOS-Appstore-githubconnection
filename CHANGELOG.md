@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.0-alpha.4
+
+- Declare `python-setuptools` explicitly for non-isolated Arch wheel builds.
+
 ## 0.1.0-alpha.3
 
 - Add the official ArtCraft Launcher as a clearly marked experimental suite.
