@@ -30,12 +30,14 @@ straightforward to browse and useful offline with bundled metadata.
   as a neutral, clearly marked experimental suite preview for alpha 3.
 - Added `project-link`: a validation-only action that opens an official HTTPS
   release page but cannot download or execute catalog-supplied code.
+- Declared `python-setuptools` explicitly so the Arch wheel build can import
+  the configured `setuptools.build_meta` backend without build isolation.
 
 ## Still to do
 
 - Run the Linux UI and capture final screenshots in an Arch/KDE environment.
-- Review, merge and tag alpha 3, then pin that exact release and checksum in
-  the LOKRO OS build.
+- Review, merge and tag alpha 4. LOKRO OS may keep the checksum-pinned alpha-3
+  source with its corrected downstream PKGBUILD or move to the next tag.
 - Add real design packs after the user supplies artwork. Each pack must pass
   the LOKRO validator and include license/author metadata.
 - Decide whether an opt-in proprietary category (for example Steam) belongs in
