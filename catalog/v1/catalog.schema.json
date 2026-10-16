@@ -47,6 +47,17 @@
             {
               "type": "object",
               "additionalProperties": false,
+              "required": ["method", "ref", "url", "sha256"],
+              "properties": {
+                "method": {"const": "flatpak-bundle"},
+                "ref": {"type": "string", "pattern": "^[A-Za-z0-9_-]+(?:\\.[A-Za-z0-9_-]+){2,}$"},
+                "url": {"type": "string", "pattern": "^https://.+\\.flatpak$"},
+                "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
               "required": ["method", "url", "sha256"],
               "properties": {
                 "method": {"const": "lokro-design-pack"},

@@ -14,14 +14,17 @@ The first alpha deliberately keeps installation rules small and auditable:
   are not supported;
 - early upstream projects may appear as clearly marked `project-link` entries;
   those open the official release page but never auto-install a download;
+- reviewed upstream Flatpak bundles may be installed only from an immutable
+  version URL after an exact SHA-256 check;
 - future design packs use checksum-pinned `.lokrodesign` archives and the
   user-scoped `lokro-design-pack` validator from LOKRO OS.
 
 The bundled catalog starts with open-source alternatives for image editing,
 drawing, video, audio, office work, streaming and Minecraft launching. The
 program has search, category filters, featured items, installation state and
-install/update actions. The experimental ArtCraft Launcher entry exposes its
-unified creative/office suite without replacing the established applications.
+install/update actions. The experimental ArtCraft Launcher 0.3.2 entry installs
+the official checksum-pinned x86_64 Flatpak bundle without replacing the
+established applications.
 
 ## Run from source
 

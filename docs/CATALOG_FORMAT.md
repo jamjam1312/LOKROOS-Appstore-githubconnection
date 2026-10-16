@@ -15,6 +15,19 @@ Valid alpha-1 install methods are:
 
 ```json
 {
+  "method": "flatpak-bundle",
+  "ref": "org.example.App",
+  "url": "https://example.org/releases/v1.2.3/example-1.2.3-x86_64.flatpak",
+  "sha256": "64 lowercase hexadecimal characters"
+}
+```
+
+`flatpak-bundle` is reserved for reviewed upstream releases that are not on
+Flathub. Mutable `latest` URLs, redirects to unversioned files and missing
+checksums are not accepted.
+
+```json
+{
   "method": "lokro-design-pack",
   "url": "https://example.org/pack.lokrodesign",
   "sha256": "64 lowercase hexadecimal characters"

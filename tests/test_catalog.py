@@ -25,12 +25,13 @@ class CatalogTests(unittest.TestCase):
         self.assertIn("libreoffice", {item["id"] for item in filter_items(self.catalog["items"], category="Büro")})
         self.assertIn("artcraft-launcher", {item["id"] for item in filter_items(self.catalog["items"], "wordcraft")})
 
-    def test_project_link_is_https_and_never_a_shell_command(self) -> None:
+    def test_artcraft_is_an_immutable_checksummed_flatpak_bundle(self) -> None:
         item = next(item for item in self.catalog["items"] if item["id"] == "artcraft-launcher")
-        self.assertEqual(item["install"]["method"], "project-link")
-        self.assertTrue(item["install"]["url"].startswith("https://github.com/storytold/"))
+        self.assertEqual(item["install"]["method"], "flatpak-bundle")
+        self.assertIn("/releases/download/v0.3.2/", item["install"]["url"])
+        self.assertEqual(len(item["install"]["sha256"]), 64)
         candidate = copy.deepcopy(self.catalog)
-        candidate["items"][-1]["install"]["url"] = "file:///tmp/payload"
+        candidate["items"][-1]["install"]["url"] = "https://github.com/storytold/craft-launcher/releases/latest"
         with self.assertRaises(CatalogError):
             validate_catalog(candidate)
 

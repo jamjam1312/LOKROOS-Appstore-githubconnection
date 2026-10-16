@@ -161,16 +161,21 @@
     {
       "id": "artcraft-launcher",
       "kind": "application",
-      "name": "ArtCraft Launcher (Alpha)",
+      "name": "ArtCraft Launcher 0.3.2 (Alpha)",
       "summary": "Ein Launcher für eine einheitliche Kreativ- und Office-Suite",
-      "description": "Experimentelle Rust-Suite mit PhotoCraft, VectorCraft, FilmCraft, EffectCraft, DesignCraft, PDFCraft, WordCraft, GridCraft und DeckCraft. Der Upstream kennzeichnet sie als frühe Alpha; LOKRO öffnet daher nur die offizielle, prüfsummengestützte Release-Seite.",
+      "description": "Experimentelle Rust-Suite mit PhotoCraft, VectorCraft, FilmCraft, EffectCraft, DesignCraft, PDFCraft, WordCraft, GridCraft und DeckCraft. LOKRO lädt ausschließlich das festgelegte offizielle x86_64-Flatpak-Bundle und prüft vor der Installation dessen SHA-256.",
       "categories": ["Experimentell", "Kreativwerkzeuge", "Office-Werkzeuge"],
       "icon": "assets/icons/artcraft-launcher.svg",
       "homepage": "https://getartcraft.com/",
       "source": "https://github.com/storytold/craft-launcher",
       "license": "MIT OR Apache-2.0",
       "featured": false,
-      "install": {"method": "project-link", "url": "https://github.com/storytold/craft-launcher/releases/latest"}
+      "install": {
+        "method": "flatpak-bundle",
+        "ref": "ai.storyteller.artcraft-launcher",
+        "url": "https://github.com/storytold/craft-launcher/releases/download/v0.3.2/artcraft-launcher-0.3.2-linux-x86_64.flatpak",
+        "sha256": "67d135d290117b345b9a6ae3cab4391587cae3fa178a8abfcc2cd8e3f2d35d92"
+      }
     }
   ]
 }

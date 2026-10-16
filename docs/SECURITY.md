@@ -7,7 +7,13 @@ channel.
 
 `flatpak` accepts an exact application ID and the fixed `flathub` remote. The
 application invokes `flatpak` without a shell and installs into the current
-user's account.
+user's account. The helper creates or repairs the user-scoped Flathub remote
+before installing, so a missing or stale system remote cannot break the Store.
+
+`flatpak-bundle` accepts an exact application ID, an immutable HTTPS URL ending
+in `.flatpak` and a lowercase SHA-256. It downloads at most 512 MiB into a
+temporary directory, verifies the complete file and only then passes the local
+path to Flatpak. No catalog-provided shell command is accepted.
 
 `lokro-design-pack` is reserved for HTTPS URLs ending in `.lokrodesign` and a
 lowercase 64-character SHA-256. The archive is downloaded to a temporary file,

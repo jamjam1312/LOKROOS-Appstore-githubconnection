@@ -24,6 +24,9 @@ first tagged release.
 - The source repository URL is metadata, not an executable download URL.
 - `project-link` entries are informational early-access cards. They may open
   an official HTTPS release page but may not download or execute binaries.
+- `flatpak-bundle` is limited to an exact application ID, immutable HTTPS
+  `.flatpak` URL and SHA-256. The helper downloads into a temporary directory,
+  verifies the bytes and invokes Flatpak directly without a shell.
 - App icons are committed for offline browsing and separately attributed.
 - Design, cursor, theme and wallpaper sections are represented in the schema.
   Remote design installation is enabled only for checksum-pinned
@@ -31,8 +34,8 @@ first tagged release.
 - The UI is PySide6 + QML to stay native-looking on KDE without creating a new
   desktop environment.
 - The app-store catalog can evolve independently from the large ISO.
-- ArtCraft is intentionally marked experimental; established Flathub entries
-  remain available and are not replaced by that suite.
+- ArtCraft is intentionally marked experimental; version 0.3.2 is pinned by
+  URL and checksum, and established Flathub entries remain available.
 
 Read `AGENTS.md`, `docs/SECURITY.md`, `docs/CATALOG_FORMAT.md` and
 `docs/PROJECT_STATE.md` before changing installation behavior.
