@@ -19,6 +19,12 @@ def main() -> int:
             icon = ROOT / item["icon"]
             if not icon.is_file():
                 raise CatalogError(f"missing icon for {item['id']}: {item['icon']}")
+        pkgbuild = (ROOT / "packaging" / "arch" / "PKGBUILD.in").read_text(encoding="utf-8")
+        for required in ("depends=('python' 'pyside6' 'flatpak')", "pkgver=@PKGVER@", "_tag='v@TAG@'", "@SHA256@"):
+            if required not in pkgbuild:
+                raise CatalogError(f"Arch package template is missing: {required}")
+        if "python-pyside6" in pkgbuild:
+            raise CatalogError("Arch package template contains obsolete python-pyside6 name")
     except (CatalogError, OSError) as error:
         print(f"catalog validation failed: {error}", file=sys.stderr)
         return 1

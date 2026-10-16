@@ -29,7 +29,7 @@ python -m pip install -e .
 lokro-store
 ```
 
-On Arch Linux, install `python-pyside6` and `flatpak` first. The app itself does
+On Arch Linux, install `pyside6` and `flatpak` first. The app itself does
 not require administrator privileges; Flatpaks are installed for the current
 user.
 
