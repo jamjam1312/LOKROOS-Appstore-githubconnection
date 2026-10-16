@@ -1,23 +1,24 @@
-# Replace @VERSION@ and @SHA256@ from a tagged source release before building.
+# Replace @PKGVER@, @TAG@ and @SHA256@ from a tagged source release.
 pkgname=lokro-store
-pkgver=@VERSION@
+pkgver=@PKGVER@
 pkgrel=1
 pkgdesc='Safe application and design catalog for LOKRO OS'
 arch=('any')
 url='https://github.com/jamjam1312/LOKROOS-Appstore-githubconnection'
 license=('CC0-1.0')
-depends=('python' 'python-pyside6' 'flatpak')
+depends=('python' 'pyside6' 'flatpak')
 makedepends=('python-build' 'python-installer' 'python-wheel')
-source=("$pkgname-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz")
+_tag='v@TAG@'
+source=("$pkgname-${_tag}.tar.gz::$url/archive/refs/tags/${_tag}.tar.gz")
 sha256sums=('@SHA256@')
 
 build() {
-  cd "LOKROOS-Appstore-githubconnection-$pkgver"
+  cd "LOKROOS-Appstore-githubconnection-${_tag#v}"
   python -m build --wheel --no-isolation
 }
 
 package() {
-  cd "LOKROOS-Appstore-githubconnection-$pkgver"
+  cd "LOKROOS-Appstore-githubconnection-${_tag#v}"
   python -m installer --destdir="$pkgdir" dist/*.whl
   install -Dm644 catalog/v1/catalog.json "$pkgdir/usr/share/lokro-store/catalog/v1/catalog.json"
   install -Dm644 catalog/v1/catalog.schema.json "$pkgdir/usr/share/lokro-store/catalog/v1/catalog.schema.json"

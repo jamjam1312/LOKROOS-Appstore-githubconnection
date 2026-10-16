@@ -23,6 +23,9 @@ straightforward to browse and useful offline with bundled metadata.
   type-resolution failures for the newer PySide runtime. CI now installs the
   declared PySide6 runtime, runs its matching linter and loads/renders the real
   interface offscreen with Ubuntu's minimal EGL runtime.
+- Corrected the Arch dependency name to the official `pyside6` package and
+  separated Arch's hyphen-free `pkgver` from the SemVer Git tag in the package
+  template. This correction is intended for the alpha-2 tag used by LOKRO OS.
 
 ## Still to do
 
