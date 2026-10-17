@@ -1,5 +1,11 @@
 # Icon sources
 
+## LOKRO Design Pack
+
+- File: `lokro-design-pack.svg`
+- Author: LOKRO OS contributors
+- License: CC0-1.0
+
 ## ArtCraft Launcher
 
 - File: `artcraft-launcher.svg`

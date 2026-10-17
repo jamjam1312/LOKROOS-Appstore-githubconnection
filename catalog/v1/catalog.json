@@ -1,7 +1,7 @@
 {
   "$schema": "./catalog.schema.json",
   "schemaVersion": 1,
-  "generatedAt": "2026-10-16T00:00:00Z",
+  "generatedAt": "2026-10-17T00:00:00Z",
   "repository": "https://github.com/jamjam1312/LOKROOS-Appstore-githubconnection",
   "items": [
     {
@@ -157,6 +157,24 @@
       "license": "GPL-2.0-or-later",
       "featured": false,
       "install": {"method": "flatpak", "remote": "flathub", "ref": "com.obsproject.Studio"}
+    },
+    {
+      "id": "lokro-monochrome-large-cursor",
+      "kind": "design-pack",
+      "name": "LOKRO Monochrome – Large Cursor",
+      "summary": "LOKRO-Dunkeldesign mit besser sichtbarem Mauszeiger",
+      "description": "Erstes prüfbares LOKRO-Design-Pack. Es nutzt ausschließlich bereits installierte LOKRO- und Breeze-Komponenten und setzt den Mauszeiger auf 32 Pixel. Das Archiv enthält keine Skripte oder ausführbaren Dateien.",
+      "categories": ["Design", "Barrierearm", "LOKRO"],
+      "icon": "assets/icons/lokro-design-pack.svg",
+      "homepage": "https://github.com/jamjam1312/LOKROOS-Arch-based/blob/main/docs/DESIGN_PACKS.md",
+      "source": "https://github.com/jamjam1312/LOKROOS-Appstore-githubconnection/tree/v0.1.0-alpha.6/catalog/packs-src/org.lokro.monochrome-large-cursor",
+      "license": "CC-BY-SA-4.0",
+      "featured": true,
+      "install": {
+        "method": "lokro-design-pack",
+        "url": "https://raw.githubusercontent.com/jamjam1312/LOKROOS-Appstore-githubconnection/v0.1.0-alpha.6/catalog/packs/org.lokro.monochrome-large-cursor-1.0.0.lokrodesign",
+        "sha256": "8c039c36e67c3f8cce3d00a712ca88138298cacb721cdef7096f85797be1b7e0"
+      }
     },
     {
       "id": "artcraft-launcher",

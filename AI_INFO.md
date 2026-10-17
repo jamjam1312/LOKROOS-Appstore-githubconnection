@@ -30,7 +30,8 @@ first tagged release.
 - App icons are committed for offline browsing and separately attributed.
 - Design, cursor, theme and wallpaper sections are represented in the schema.
   Remote design installation is enabled only for checksum-pinned
-  `.lokrodesign` archives.
+  `.lokrodesign` archives. The Store downloads to a temporary directory and
+  hands the verified file to LOKRO OS's non-executable pack validator.
 - The UI is PySide6 + QML to stay native-looking on KDE without creating a new
   desktop environment.
 - The app-store catalog can evolve independently from the large ISO.
