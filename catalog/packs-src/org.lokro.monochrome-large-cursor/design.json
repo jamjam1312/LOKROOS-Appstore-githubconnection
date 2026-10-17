@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "id": "org.lokro.monochrome-large-cursor",
+  "name": "LOKRO Monochrome – Large Cursor",
+  "version": "1.0.0",
+  "author": "LOKRO OS contributors",
+  "license": "CC-BY-SA-4.0",
+  "description": "Built-in LOKRO dark appearance with a more visible 32-pixel Breeze cursor.",
+  "plasma": {
+    "lookAndFeel": "org.lokro.dark",
+    "colorScheme": "LokroDark",
+    "cursorTheme": "breeze_cursors",
+    "cursorSize": 32,
+    "wallpaperPlugin": "org.lokro.slashes"
+  }
+}

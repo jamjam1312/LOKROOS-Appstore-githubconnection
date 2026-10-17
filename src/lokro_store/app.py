@@ -15,7 +15,13 @@ from PySide6.QtQml import QQmlApplicationEngine
 from PySide6.QtQuickControls2 import QQuickStyle
 
 from .catalog import CatalogError, filter_items, load_catalog, loads_catalog
-from .installer import InstallError, flatpak_bundle_plan, flatpak_plan, installation_scope
+from .installer import (
+    InstallError,
+    flatpak_bundle_plan,
+    flatpak_plan,
+    installation_scope,
+    remote_design_pack_plan,
+)
 
 REMOTE_CATALOG = (
     "https://raw.githubusercontent.com/jamjam1312/"
@@ -115,12 +121,14 @@ class StoreBackend(QObject):
         row["actionText"] = (
             "Installiert" if method == "builtin" else
             "Projekt öffnen" if method == "project-link" else
+            "Herunterladen" if method == "lokro-design-pack" else
             "Systemweit installiert" if scope == "system" else
             "Aktualisieren" if row["installed"] else
             "Installieren"
         )
         row["actionEnabled"] = (
-            method == "project-link" or (method in {"flatpak", "flatpak-bundle"} and scope != "system")
+            method in {"project-link", "lokro-design-pack"}
+            or (method in {"flatpak", "flatpak-bundle"} and scope != "system")
         )
         return row
 
@@ -182,19 +190,23 @@ class StoreBackend(QObject):
             return
         try:
             item = self._find(item_id)
-            if item["install"]["method"] == "project-link":
+            method = item["install"]["method"]
+            if method == "project-link":
                 self.openUrl(item["install"]["url"])
                 self._set_message(
                     "Offizielle Projektseite geöffnet; diese Alpha installiert keine ungeprüften Binärdateien."
                 )
                 return
-            scope = installation_scope(item)
-            if scope == "system":
-                raise InstallError("systemweit installierte Flatpaks werden in dieser Alpha nicht verändert")
-            if item["install"]["method"] == "flatpak-bundle":
-                plan = flatpak_bundle_plan(item, scope == "user")
+            if method == "lokro-design-pack":
+                plan = remote_design_pack_plan(item)
             else:
-                plan = flatpak_plan(item, scope == "user")
+                scope = installation_scope(item)
+                if scope == "system":
+                    raise InstallError("systemweit installierte Flatpaks werden in dieser Alpha nicht verändert")
+                if method == "flatpak-bundle":
+                    plan = flatpak_bundle_plan(item, scope == "user")
+                else:
+                    plan = flatpak_plan(item, scope == "user")
         except InstallError as error:
             self._set_message(f"Nicht möglich: {error}")
             return

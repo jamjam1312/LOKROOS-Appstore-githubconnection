@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.0-alpha.6
+
+- Complete the safe Store-to-`lokro-design-pack` download path.
+- Add a checksummed first-party monochrome large-cursor pack for end-to-end
+  installation testing.
+
 ## 0.1.0-alpha.5
 
 - Repair or create the user-scoped Flathub remote before installs and updates.

@@ -36,11 +36,13 @@ straightforward to browse and useful offline with bundled metadata.
   remote before every Store install/update operation.
 - Added a shell-free, size-bounded and SHA-256-verified Flatpak-bundle path.
   ArtCraft Launcher 0.3.2 x86_64 is the first pinned bundle.
+- Completed the matching checksum-verified `.lokrodesign` download path and
+  added a first-party monochrome large-cursor pack as an end-to-end example.
 
 ## Still to do
 
 - Run the Linux UI and capture final screenshots in an Arch/KDE environment.
-- Review, merge and tag alpha 5, then pin that release in LOKRO OS.
+- Review, merge and tag alpha 6, then pin that release in LOKRO OS.
 - Add real design packs after the user supplies artwork. Each pack must pass
   the LOKRO validator and include license/author metadata.
 - Decide whether an opt-in proprietary category (for example Steam) belongs in

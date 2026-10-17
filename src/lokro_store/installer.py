@@ -19,6 +19,7 @@ FLATPAK_RE = re.compile(r"^[A-Za-z0-9_-]+(?:\.[A-Za-z0-9_-]+){2,}$")
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 FLATHUB_DESCRIPTOR = "https://dl.flathub.org/repo/flathub.flatpakrepo"
 MAX_BUNDLE_BYTES = 512 * 1024 * 1024
+MAX_DESIGN_PACK_BYTES = 100 * 1024 * 1024
 
 
 class InstallError(RuntimeError):
@@ -78,6 +79,20 @@ def design_pack_plan(item: dict, verified_archive: Path) -> CommandPlan:
     return CommandPlan(executable, ("install", str(verified_archive)), f"Install {item['name']}")
 
 
+def remote_design_pack_plan(item: dict) -> CommandPlan:
+    install = item.get("install", {})
+    url = install.get("url")
+    digest = install.get("sha256")
+    if install.get("method") != "lokro-design-pack":
+        raise InstallError("item is not a LOKRO design pack")
+    if not isinstance(url, str) or not _valid_design_pack_url(url):
+        raise InstallError("invalid LOKRO design-pack URL")
+    if not isinstance(digest, str) or not SHA256_RE.fullmatch(digest):
+        raise InstallError("invalid LOKRO design-pack checksum")
+    executable = shutil.which("lokro-store-design-pack") or "lokro-store-design-pack"
+    return CommandPlan(executable, (url, digest), f"Install {item['name']}")
+
+
 def installation_scope(item: dict, runner: Callable[..., subprocess.CompletedProcess] = subprocess.run) -> str | None:
     install = item.get("install", {})
     if install.get("method") == "builtin":
@@ -109,6 +124,19 @@ def _valid_bundle_url(raw: str) -> bool:
         and parsed.username is None
         and parsed.password is None
         and parsed.path.endswith(".flatpak")
+        and not parsed.query
+        and not parsed.fragment
+    )
+
+
+def _valid_design_pack_url(raw: str) -> bool:
+    parsed = urlparse(raw)
+    return (
+        parsed.scheme == "https"
+        and bool(parsed.netloc)
+        and parsed.username is None
+        and parsed.password is None
+        and parsed.path.endswith(".lokrodesign")
         and not parsed.query
         and not parsed.fragment
     )
@@ -156,6 +184,22 @@ def _download_verified_bundle(url: str, expected_sha256: str, destination: Path)
         raise InstallError("SHA-256-Prüfung des Flatpak-Bundles ist fehlgeschlagen")
 
 
+def _download_verified_file(url: str, expected_sha256: str, destination: Path, maximum: int) -> None:
+    request = urllib.request.Request(url, headers={"User-Agent": "LOKRO-Store/0.1"})
+    digest = sha256()
+    total = 0
+    with urllib.request.urlopen(request, timeout=30) as response, destination.open("xb") as output:
+        while block := response.read(1024 * 1024):
+            total += len(block)
+            if total > maximum:
+                raise InstallError("Download überschreitet das erlaubte Größenlimit")
+            digest.update(block)
+            output.write(block)
+    if digest.hexdigest() != expected_sha256:
+        destination.unlink(missing_ok=True)
+        raise InstallError("SHA-256-Prüfung des Downloads ist fehlgeschlagen")
+
+
 def helper_main(arguments: list[str] | None = None) -> int:
     argv = list(sys.argv[1:] if arguments is None else arguments)
     try:
@@ -183,6 +227,26 @@ def helper_main(arguments: list[str] | None = None) -> int:
         raise InstallError("Ungültiger Installationsauftrag")
     except (InstallError, OSError, urllib.error.URLError) as error:
         print(f"lokro-store-flatpak: {error}", file=sys.stderr)
+        return 2
+
+
+def design_pack_helper_main(arguments: list[str] | None = None) -> int:
+    argv = list(sys.argv[1:] if arguments is None else arguments)
+    try:
+        if len(argv) != 2 or not _valid_design_pack_url(argv[0]) or not SHA256_RE.fullmatch(argv[1]):
+            raise InstallError("Ungültiger Design-Pack-Installationsauftrag")
+        executable = shutil.which("lokro-design-pack")
+        if executable is None:
+            raise InstallError("LOKRO Design Pack ist auf diesem System nicht installiert")
+        with tempfile.TemporaryDirectory(prefix="lokro-store-design-pack-") as temporary:
+            archive = Path(temporary) / "download.lokrodesign"
+            _download_verified_file(argv[0], argv[1], archive, MAX_DESIGN_PACK_BYTES)
+            result = subprocess.run([executable, "install", str(archive)], check=False)
+            if result.returncode:
+                raise InstallError(f"Design-Pack-Validator wurde mit Fehlercode {result.returncode} beendet")
+        return 0
+    except (InstallError, OSError, urllib.error.URLError) as error:
+        print(f"lokro-store-design-pack: {error}", file=sys.stderr)
         return 2
 
 

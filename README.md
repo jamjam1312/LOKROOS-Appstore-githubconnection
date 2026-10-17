@@ -17,7 +17,8 @@ The first alpha deliberately keeps installation rules small and auditable:
 - reviewed upstream Flatpak bundles may be installed only from an immutable
   version URL after an exact SHA-256 check;
 - future design packs use checksum-pinned `.lokrodesign` archives and the
-  user-scoped `lokro-design-pack` validator from LOKRO OS.
+  user-scoped `lokro-design-pack` validator from LOKRO OS. Alpha 6 includes a
+  first-party monochrome large-cursor pack that exercises this path end to end.
 
 The bundled catalog starts with open-source alternatives for image editing,
 drawing, video, audio, office work, streaming and Minecraft launching. The

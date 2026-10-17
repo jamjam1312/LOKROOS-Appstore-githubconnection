@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="LOKRO Design Pack">
+  <rect width="128" height="128" rx="24" fill="#111"/>
+  <circle cx="43" cy="43" r="20" fill="none" stroke="#fff" stroke-width="8"/>
+  <path d="M22 91h84M43 63v28M70 37h36M70 55h28M70 73h20" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round"/>
+</svg>

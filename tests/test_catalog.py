@@ -24,6 +24,7 @@ class CatalogTests(unittest.TestCase):
         self.assertIn("gimp", {item["id"] for item in filter_items(self.catalog["items"], "bildbearbeitung")})
         self.assertIn("libreoffice", {item["id"] for item in filter_items(self.catalog["items"], category="Büro")})
         self.assertIn("artcraft-launcher", {item["id"] for item in filter_items(self.catalog["items"], "wordcraft")})
+        self.assertIn("lokro-monochrome-large-cursor", {item["id"] for item in filter_items(self.catalog["items"], category="design-pack")})
 
     def test_artcraft_is_an_immutable_checksummed_flatpak_bundle(self) -> None:
         item = next(item for item in self.catalog["items"] if item["id"] == "artcraft-launcher")
@@ -40,6 +41,12 @@ class CatalogTests(unittest.TestCase):
         candidate["items"][0]["install"] = {"method": "shell", "command": "anything"}
         with self.assertRaises(CatalogError):
             validate_catalog(candidate)
+
+    def test_design_pack_is_versioned_and_checksummed(self) -> None:
+        item = next(item for item in self.catalog["items"] if item["id"] == "lokro-monochrome-large-cursor")
+        self.assertEqual(item["install"]["method"], "lokro-design-pack")
+        self.assertIn("/v0.1.0-alpha.6/", item["install"]["url"])
+        self.assertEqual(item["install"]["sha256"], "8c039c36e67c3f8cce3d00a712ca88138298cacb721cdef7096f85797be1b7e0")
 
     def test_credentialed_url_is_rejected(self) -> None:
         candidate = copy.deepcopy(self.catalog)

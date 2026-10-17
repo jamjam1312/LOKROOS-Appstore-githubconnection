@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "lokro-store"
-version = "0.1.0a5"
+version = "0.1.0a6"
 description = "Safe, reviewable application and design catalog for LOKRO OS"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -22,6 +22,7 @@ classifiers = [
 [project.scripts]
 lokro-store = "lokro_store.app:main"
 lokro-store-flatpak = "lokro_store.installer:helper_main"
+lokro-store-design-pack = "lokro_store.installer:design_pack_helper_main"
 
 [project.urls]
 Repository = "https://github.com/jamjam1312/LOKROOS-Appstore-githubconnection"
