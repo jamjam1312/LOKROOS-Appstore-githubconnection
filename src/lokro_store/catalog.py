@@ -63,6 +63,21 @@ def _validate_install(value: Any, kind: str) -> dict[str, str]:
         ref = value.get("ref")
         if not isinstance(ref, str) or not FLATPAK_RE.fullmatch(ref):
             raise CatalogError("invalid Flatpak application ID")
+    elif method == "flatpak-bundle":
+        if set(value) != {"method", "ref", "url", "sha256"}:
+            raise CatalogError("flatpak-bundle install has unknown or missing fields")
+        if kind != "application":
+            raise CatalogError("flatpak-bundle is allowed only for applications")
+        ref = value.get("ref")
+        if not isinstance(ref, str) or not FLATPAK_RE.fullmatch(ref):
+            raise CatalogError("invalid Flatpak application ID")
+        url = _https(value.get("url"), "install.url")
+        parsed = urlparse(url)
+        if not parsed.path.endswith(".flatpak") or parsed.query or parsed.fragment:
+            raise CatalogError("flatpak-bundle URL must be an immutable .flatpak URL")
+        digest = value.get("sha256")
+        if not isinstance(digest, str) or not SHA256_RE.fullmatch(digest):
+            raise CatalogError("flatpak-bundle sha256 must be 64 lowercase hexadecimal characters")
     elif method == "lokro-design-pack":
         if set(value) != {"method", "url", "sha256"}:
             raise CatalogError("design-pack install has unknown or missing fields")

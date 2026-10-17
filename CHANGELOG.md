@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.0-alpha.5
+
+- Repair or create the user-scoped Flathub remote before installs and updates.
+- Install the official ArtCraft Launcher 0.3.2 x86_64 Flatpak bundle only after
+  checking its immutable release URL and SHA-256.
+- Keep all installer processes shell-free and user-scoped.
+
 ## 0.1.0-alpha.4
 
 - Declare `python-setuptools` explicitly for non-isolated Arch wheel builds.

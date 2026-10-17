@@ -32,12 +32,15 @@ straightforward to browse and useful offline with bundled metadata.
   release page but cannot download or execute catalog-supplied code.
 - Declared `python-setuptools` explicitly so the Arch wheel build can import
   the configured `setuptools.build_meta` backend without build isolation.
+- Fixed Flathub installation by creating or repairing the user-scoped Flathub
+  remote before every Store install/update operation.
+- Added a shell-free, size-bounded and SHA-256-verified Flatpak-bundle path.
+  ArtCraft Launcher 0.3.2 x86_64 is the first pinned bundle.
 
 ## Still to do
 
 - Run the Linux UI and capture final screenshots in an Arch/KDE environment.
-- Review, merge and tag alpha 4. LOKRO OS may keep the checksum-pinned alpha-3
-  source with its corrected downstream PKGBUILD or move to the next tag.
+- Review, merge and tag alpha 5, then pin that release in LOKRO OS.
 - Add real design packs after the user supplies artwork. Each pack must pass
   the LOKRO validator and include license/author metadata.
 - Decide whether an opt-in proprietary category (for example Steam) belongs in

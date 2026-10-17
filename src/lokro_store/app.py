@@ -15,7 +15,7 @@ from PySide6.QtQml import QQmlApplicationEngine
 from PySide6.QtQuickControls2 import QQuickStyle
 
 from .catalog import CatalogError, filter_items, load_catalog, loads_catalog
-from .installer import InstallError, flatpak_plan, installation_scope
+from .installer import InstallError, flatpak_bundle_plan, flatpak_plan, installation_scope
 
 REMOTE_CATALOG = (
     "https://raw.githubusercontent.com/jamjam1312/"
@@ -120,7 +120,7 @@ class StoreBackend(QObject):
             "Installieren"
         )
         row["actionEnabled"] = (
-            method == "project-link" or (method == "flatpak" and scope != "system")
+            method == "project-link" or (method in {"flatpak", "flatpak-bundle"} and scope != "system")
         )
         return row
 
@@ -191,7 +191,10 @@ class StoreBackend(QObject):
             scope = installation_scope(item)
             if scope == "system":
                 raise InstallError("systemweit installierte Flatpaks werden in dieser Alpha nicht verändert")
-            plan = flatpak_plan(item, scope == "user")
+            if item["install"]["method"] == "flatpak-bundle":
+                plan = flatpak_bundle_plan(item, scope == "user")
+            else:
+                plan = flatpak_plan(item, scope == "user")
         except InstallError as error:
             self._set_message(f"Nicht möglich: {error}")
             return
