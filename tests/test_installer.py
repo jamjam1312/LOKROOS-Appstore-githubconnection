@@ -11,8 +11,12 @@ from lokro_store.installer import (
     design_pack_helper_main,
     flatpak_bundle_plan,
     flatpak_plan,
+    helper_main,
     installation_scope,
     remote_design_pack_plan,
+    system_package_installed,
+    system_update_plan,
+    update_all_flatpaks_plan,
 )
 
 
@@ -34,6 +38,25 @@ class InstallerTests(unittest.TestCase):
     def test_update_plan_is_user_scoped(self, _which) -> None:
         plan = flatpak_plan(self.item, installed=True)
         self.assertEqual(plan.arguments, ("update", "org.example.App"))
+
+    @patch("lokro_store.installer.shutil.which", return_value="/usr/bin/lokro-store-flatpak")
+    def test_update_all_plan_has_fixed_arguments(self, _which) -> None:
+        plan = update_all_flatpaks_plan()
+        self.assertEqual(plan.executable, "/usr/bin/lokro-store-flatpak")
+        self.assertEqual(plan.arguments, ("update-all",))
+
+    @patch("lokro_store.installer._run_flatpak")
+    @patch("lokro_store.installer._ensure_flathub")
+    def test_update_all_helper_is_user_scoped(self, ensure, run) -> None:
+        self.assertEqual(helper_main(["update-all"]), 0)
+        ensure.assert_called_once_with()
+        run.assert_called_once_with(["update", "--user", "--noninteractive"])
+
+    @patch("lokro_store.installer.shutil.which", return_value="/usr/bin/lokro-update-gui")
+    def test_system_update_plan_has_no_catalog_arguments(self, _which) -> None:
+        plan = system_update_plan()
+        self.assertEqual(plan.executable, "/usr/bin/lokro-update-gui")
+        self.assertEqual(plan.arguments, ())
 
     @patch("lokro_store.installer.shutil.which", return_value="/usr/bin/lokro-store-flatpak")
     def test_pinned_bundle_plan_has_no_shell(self, _which) -> None:
@@ -113,6 +136,21 @@ class InstallerTests(unittest.TestCase):
             return Result()
 
         self.assertEqual(installation_scope(self.item, runner), "system")
+
+    @patch("lokro_store.installer.shutil.which", return_value="/usr/bin/pacman")
+    def test_system_package_check_is_read_only(self, _which) -> None:
+        item = {"id": "firefox"}
+        commands = []
+
+        def runner(command, **_kwargs):
+            commands.append(command)
+            return type("Result", (), {"returncode": 0})()
+
+        self.assertTrue(system_package_installed(item, runner))
+        self.assertEqual(commands, [["/usr/bin/pacman", "-Q", "firefox"]])
+
+    def test_system_package_check_rejects_command_text(self) -> None:
+        self.assertFalse(system_package_installed({"id": "firefox;rm"}))
 
 
 if __name__ == "__main__":

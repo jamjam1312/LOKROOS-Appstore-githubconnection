@@ -20,6 +20,16 @@ SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 FLATHUB_DESCRIPTOR = "https://dl.flathub.org/repo/flathub.flatpakrepo"
 MAX_BUNDLE_BYTES = 512 * 1024 * 1024
 MAX_DESIGN_PACK_BYTES = 100 * 1024 * 1024
+SYSTEM_PACKAGES = {
+    "ark": "ark",
+    "dolphin": "dolphin",
+    "firefox": "firefox",
+    "flatseal": "flatseal",
+    "kate": "kate",
+    "libreoffice": "libreoffice-fresh",
+    "okular": "okular",
+    "vlc": "vlc",
+}
 
 
 class InstallError(RuntimeError):
@@ -48,6 +58,18 @@ def flatpak_plan(item: dict, installed: bool) -> CommandPlan:
         arguments = ("install", ref)
         label = f"Install {item['name']}"
     return CommandPlan(executable, arguments, label)
+
+
+def update_all_flatpaks_plan() -> CommandPlan:
+    """Return a fixed, user-scoped update command with no catalog arguments."""
+    executable = shutil.which("lokro-store-flatpak") or "lokro-store-flatpak"
+    return CommandPlan(executable, ("update-all",), "Alle Flatpaks aktualisieren")
+
+
+def system_update_plan() -> CommandPlan:
+    """Open the reviewed LOKRO OS updater for Pacman-managed system packages."""
+    executable = shutil.which("lokro-update-gui") or "lokro-update-gui"
+    return CommandPlan(executable, (), "LOKRO System-Updater öffnen")
 
 
 def flatpak_bundle_plan(item: dict, installed: bool) -> CommandPlan:
@@ -110,6 +132,25 @@ def installation_scope(item: dict, runner: Callable[..., subprocess.CompletedPro
         if result.returncode == 0:
             return scope.removeprefix("--")
     return None
+
+
+def system_package_installed(
+    item: dict,
+    runner: Callable[..., subprocess.CompletedProcess] = subprocess.run,
+) -> bool:
+    """Check read-only whether an allowlisted catalog package is managed by Pacman."""
+    item_id = item.get("id")
+    package = SYSTEM_PACKAGES.get(item_id) if isinstance(item_id, str) else None
+    if package is None:
+        return False
+    pacman = shutil.which("pacman")
+    if pacman is None:
+        return False
+    try:
+        result = runner([pacman, "-Q", package], capture_output=True, check=False, timeout=5)
+    except (OSError, subprocess.SubprocessError):
+        return False
+    return result.returncode == 0
 
 
 def is_installed(item: dict, runner: Callable[..., subprocess.CompletedProcess] = subprocess.run) -> bool:
@@ -203,6 +244,10 @@ def _download_verified_file(url: str, expected_sha256: str, destination: Path, m
 def helper_main(arguments: list[str] | None = None) -> int:
     argv = list(sys.argv[1:] if arguments is None else arguments)
     try:
+        if argv == ["update-all"]:
+            _ensure_flathub()
+            _run_flatpak(["update", "--user", "--noninteractive"])
+            return 0
         if len(argv) == 2 and argv[0] in {"install", "update"} and FLATPAK_RE.fullmatch(argv[1]):
             action, ref = argv
             _ensure_flathub()

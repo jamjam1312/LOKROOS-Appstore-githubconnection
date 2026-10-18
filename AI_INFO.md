@@ -4,9 +4,9 @@ This file is the short entry point for an AI or human continuing the project.
 
 LOKRO Store is a separate catalog/UI repository for LOKRO OS. The operating
 system source lives at
-`https://github.com/jamjam1312/LOKROOS-Arch-based`. LOKRO OS alpha.21 embeds
-the Store's tagged alpha.6 source; this repository can continue evolving and a
-new immutable Store tag must be pinned explicitly by the OS package.
+`https://github.com/jamjam1312/LOKROOS-Arch-based`. LOKRO OS releases pin an
+immutable Store tag explicitly; this repository can continue evolving without
+changing an already built ISO.
 
 ## Runtime flow
 
@@ -17,6 +17,8 @@ new immutable Store tag must be pinned explicitly by the OS package.
 5. `QProcess` launches that list directly; no shell parses catalog data.
 6. A remote refresh may replace only the cached catalog. The bundled catalog
    remains the offline fallback.
+7. A fixed in-code mapping detects selected system packages using read-only
+   `pacman -Q`. Catalog data never supplies a Pacman package name or command.
 
 ## Important decisions
 
@@ -38,6 +40,10 @@ new immutable Store tag must be pinned explicitly by the OS package.
 - ArtCraft is intentionally marked experimental; launcher version 0.3.2 and
   all 13 individually selectable Crafting Apps are pinned by immutable release
   URL and checksum, and established Flathub entries remain available.
+- Alpha 8 also exposes fixed controls for updating all user Flatpaks and
+  opening `lokro-update-gui`. Neither control accepts catalog arguments.
+- `docs/FIRST_BOOT_ASSISTANT_HANDOFF.md` explains the next installer task but
+  makes no ISO or partitioning changes in this repository.
 
 Read `AGENTS.md`, `docs/SECURITY.md`, `docs/CATALOG_FORMAT.md` and
 `docs/PROJECT_STATE.md` before changing installation behavior.

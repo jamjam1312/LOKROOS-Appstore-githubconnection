@@ -97,7 +97,7 @@ ApplicationWindow {
                     }
                 }
                 Rectangle { Layout.fillWidth: true; height: 1; color: window.line }
-                Label { text: "ALPHA 7"; color: window.muted; font.pixelSize: 11 }
+                Label { text: "ALPHA 8"; color: window.muted; font.pixelSize: 11 }
                 Label {
                     Layout.fillWidth: true
                     text: "Flathub-Apps, geprüfte Einzel-Bundles und sichere Design-Packs."
@@ -115,20 +115,43 @@ ApplicationWindow {
 
             Rectangle {
                 Layout.fillWidth: true
-                Layout.preferredHeight: 72
+                Layout.preferredHeight: 108
                 color: window.panel
                 border.color: window.line
-                RowLayout {
+                ColumnLayout {
                     anchors.fill: parent
                     anchors.margins: 20
-                    Label {
-                        text: search.text ? "Suchergebnisse" : "Entdecken"
-                        color: window.ink
-                        font.pixelSize: 26
-                        font.bold: true
+                    RowLayout {
+                        Layout.fillWidth: true
+                        Label {
+                            text: search.text ? "Suchergebnisse" : "Entdecken"
+                            color: window.ink
+                            font.pixelSize: 26
+                            font.bold: true
+                        }
+                        Item { Layout.fillWidth: true }
+                        Label { text: window.storeBackend.items.length + " Einträge"; color: window.muted }
                     }
-                    Item { Layout.fillWidth: true }
-                    Label { text: window.storeBackend.items.length + " Einträge"; color: window.muted }
+                    RowLayout {
+                        Layout.fillWidth: true
+                        Label {
+                            text: "Updates: Flatpaks hier, Pacman-Systempakete im geprüften LOKRO Updater."
+                            color: window.muted
+                            font.pixelSize: 12
+                            Layout.fillWidth: true
+                            elide: Text.ElideRight
+                        }
+                        Button {
+                            text: "Alle Flatpaks aktualisieren"
+                            enabled: !window.storeBackend.busy
+                            onClicked: window.storeBackend.updateAllFlatpaks()
+                        }
+                        Button {
+                            text: "System aktualisieren"
+                            enabled: !window.storeBackend.busy
+                            onClicked: window.storeBackend.openSystemUpdater()
+                        }
+                    }
                 }
             }
 

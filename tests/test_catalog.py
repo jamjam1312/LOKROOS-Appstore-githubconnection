@@ -68,6 +68,22 @@ class CatalogTests(unittest.TestCase):
         with self.assertRaises(CatalogError):
             validate_catalog(candidate)
 
+    def test_expanded_desktop_catalog_has_expected_safe_refs(self) -> None:
+        by_id = {item["id"]: item for item in self.catalog["items"]}
+        expected = {
+            "steam": "com.valvesoftware.Steam",
+            "heroic-games-launcher": "com.heroicgameslauncher.hgl",
+            "peazip": "io.github.peazip.PeaZip",
+            "vscodium": "com.vscodium.codium",
+            "visual-studio-code": "com.visualstudio.code",
+            "firefox": "org.mozilla.firefox",
+            "google-chrome": "com.google.Chrome",
+        }
+        for item_id, ref in expected.items():
+            self.assertEqual(by_id[item_id]["install"], {
+                "method": "flatpak", "remote": "flathub", "ref": ref,
+            })
+
     def test_design_pack_is_versioned_and_checksummed(self) -> None:
         item = next(item for item in self.catalog["items"] if item["id"] == "lokro-monochrome-large-cursor")
         self.assertEqual(item["install"]["method"], "lokro-design-pack")
