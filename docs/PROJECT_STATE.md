@@ -1,6 +1,6 @@
 # Project state
 
-Last updated: 2026-10-16
+Last updated: 2026-10-18
 
 ## User intent
 
@@ -38,11 +38,18 @@ straightforward to browse and useful offline with bundled metadata.
   ArtCraft Launcher 0.3.2 x86_64 is the first pinned bundle.
 - Completed the matching checksum-verified `.lokrodesign` download path and
   added a first-party monochrome large-cursor pack as an end-to-end example.
+- Added all 13 official ArtCraft Crafting Apps as independent catalog entries.
+  Each uses its exact `ai.storyteller.*` Flatpak ID, immutable upstream release
+  URL and the SHA-256 published in that release's `SHA256SUMS.txt`; the suite
+  launcher remains an optional separate entry.
+- Refined the QML shell with translucent panels, brighter focus borders and
+  clearer alpha-7 status text without changing the safe installer boundary.
 
 ## Still to do
 
 - Run the Linux UI and capture final screenshots in an Arch/KDE environment.
-- Review, merge and tag alpha 6, then pin that release in LOKRO OS.
+- Review, merge and tag alpha 7, then pin that immutable release and source
+  checksum in LOKRO OS.
 - Add real design packs after the user supplies artwork. Each pack must pass
   the LOKRO validator and include license/author metadata.
 - Decide whether an opt-in proprietary category (for example Steam) belongs in

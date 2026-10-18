@@ -23,9 +23,9 @@ The first alpha deliberately keeps installation rules small and auditable:
 The bundled catalog starts with open-source alternatives for image editing,
 drawing, video, audio, office work, streaming and Minecraft launching. The
 program has search, category filters, featured items, installation state and
-install/update actions. The experimental ArtCraft Launcher 0.3.2 entry installs
-the official checksum-pinned x86_64 Flatpak bundle without replacing the
-established applications.
+install/update actions. The experimental ArtCraft Launcher 0.3.2 remains
+optional, while all 13 Crafting Apps can now be installed separately from
+their official, versioned and checksum-pinned x86_64 Flatpak bundles.
 
 ## Run from source
 
