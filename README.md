@@ -27,6 +27,14 @@ install/update actions. The experimental ArtCraft Launcher 0.3.2 remains
 optional, while all 13 Crafting Apps can now be installed separately from
 their official, versioned and checksum-pinned x86_64 Flatpak bundles.
 
+Alpha 8 adds optional Steam, Heroic, Bottles, PeaZip, VSCodium, Visual Studio
+Code, Firefox, Chromium, Google Chrome, password managers, messengers and other
+desktop tools. Proprietary and unverified community packages are labelled in
+their descriptions. A fixed "Alle Flatpaks aktualisieren" action updates only
+the current user's Flatpaks. Selected Pacman-installed LOKRO applications are
+detected read-only and route to the separate LOKRO system updater, avoiding
+duplicate installations.
+
 ## Run from source
 
 ```bash
@@ -50,6 +58,8 @@ make test
 See [AI_INFO.md](AI_INFO.md) for the repository map, [the catalog
 specification](docs/CATALOG_FORMAT.md) for contribution rules and
 [PROJECT_STATE.md](docs/PROJECT_STATE.md) for the current hand-off state.
+The [first-boot hand-off](docs/FIRST_BOOT_ASSISTANT_HANDOFF.md) is a safe
+template for work in the separate operating-system repository.
 
 ## Status
 

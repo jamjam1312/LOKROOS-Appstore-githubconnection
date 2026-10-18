@@ -23,6 +23,16 @@ not get to provide arguments or executable content.
 `builtin` describes content already present on the system and performs no
 installation.
 
+Selected system packages are represented by a fixed mapping compiled into the
+Store, not by remote catalog fields. The Store runs only `pacman -Q NAME`
+read-only. If installed, the only available action opens the fixed
+`lokro-update-gui` executable without catalog arguments. The Store never runs
+`pacman -S`, never enables repositories and never requests root itself.
+
+The global Flatpak update action maps to one fixed helper request. The helper
+repairs the user Flathub remote and runs `flatpak update --user
+--noninteractive`; no catalog text is part of that command.
+
 ## Explicit non-features
 
 - no shell command fields;

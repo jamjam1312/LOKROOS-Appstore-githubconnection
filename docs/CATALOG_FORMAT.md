@@ -50,6 +50,10 @@ may link to GitHub, but it must not transform a GitHub URL into an executable
 installer. Icons go under `assets/icons/` with source and license notes in
 `assets/icons/SOURCES.md`.
 
+Proprietary or unverified community Flatpaks must say so in their description
+and use `Proprietary` as the license where appropriate. Listing never implies
+vendor endorsement.
+
 Design-pack contributors put review material under
 `contributions/design-packs/ID/` and open a pull request. A maintainer validates
 the archive, preview, authorship and license before adding the final catalog

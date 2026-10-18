@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.1.0-alpha.8
+
+- Expand the catalog with gaming, Epic/GOG support through Heroic, archive
+  tools, browsers, development tools, communication, security and cloud apps.
+- Mark proprietary and unverified community Flatpaks clearly in catalog text.
+- Detect selected Pacman-managed desktop applications and route their updates
+  to the existing LOKRO system updater instead of duplicating them as Flatpaks.
+- Add fixed, shell-free controls for updating every user Flatpak and opening
+  the reviewed system updater.
+- Add a detailed installation/first-boot hand-off document without changing
+  the current ISO.
+
 ## 0.1.0-alpha.7
 
 - Add all 13 ArtCraft Crafting Apps as individually installable, immutable

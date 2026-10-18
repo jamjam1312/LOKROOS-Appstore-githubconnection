@@ -15,6 +15,13 @@
 - License: MIT OR Apache-2.0
 - Copyright: ArtCraft Team and ArtCraft Launcher contributors
 
+## Neutral LOKRO category icons
+
+`gaming.svg`, `archive.svg`, `development.svg`, `browser.svg`,
+`communication.svg`, `security.svg`, `cloud.svg` and `system.svg` are original
+LOKRO Store artwork under CC0-1.0. They deliberately avoid third-party logos;
+their use does not imply endorsement by any listed application vendor.
+
 Application icons in this directory are fetched from the corresponding Flathub
 AppStream records on 2026-10-16. They are included only to identify the listed
 applications. Copyright, icon licenses and trademarks remain with each

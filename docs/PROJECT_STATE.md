@@ -44,16 +44,23 @@ straightforward to browse and useful offline with bundled metadata.
   launcher remains an optional separate entry.
 - Refined the QML shell with translucent panels, brighter focus borders and
   clearer alpha-7 status text without changing the safe installer boundary.
+- Expanded alpha 8 with optional Steam, Heroic, Bottles, PeaZip, development
+  tools, browsers, communication, security, cloud and KDE desktop entries.
+- Added fixed shell-free actions for all user Flatpak updates and the existing
+  LOKRO system updater. Selected preinstalled Pacman applications are detected
+  read-only and never duplicated or updated through catalog-supplied commands.
+- Added `docs/FIRST_BOOT_ASSISTANT_HANDOFF.md` for the next installer task. No
+  ISO source, boot configuration or current release artifact was changed.
 
 ## Still to do
 
 - Run the Linux UI and capture final screenshots in an Arch/KDE environment.
-- Review, merge and tag alpha 7, then pin that immutable release and source
-  checksum in LOKRO OS.
+- Review, merge and tag alpha 8. Pinning it in LOKRO OS is a separate future
+  change; the current ISO remains unchanged by this milestone.
 - Add real design packs after the user supplies artwork. Each pack must pass
   the LOKRO validator and include license/author metadata.
-- Decide whether an opt-in proprietary category (for example Steam) belongs in
-  a later catalog. It is intentionally absent from the open-source seed list.
+- Consider per-item verification badges once Flathub exposes a stable API the
+  Store can cache and validate offline.
 - Add localization after UI strings stabilize.
 
 ## ISO note

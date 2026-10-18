@@ -21,6 +21,9 @@ from .installer import (
     flatpak_plan,
     installation_scope,
     remote_design_pack_plan,
+    system_package_installed,
+    system_update_plan,
+    update_all_flatpaks_plan,
 )
 
 REMOTE_CATALOG = (
@@ -114,11 +117,13 @@ class StoreBackend(QObject):
             if local_icon else REMOTE_ASSET_ROOT + item["icon"]
         )
         row["categoriesText"] = " · ".join(item["categories"])
+        system_installed = system_package_installed(item)
         scope = installation_scope(item)
-        row["installed"] = scope is not None
-        row["installScope"] = scope or ""
+        row["installed"] = system_installed or scope is not None
+        row["installScope"] = "system-package" if system_installed else (scope or "")
         method = item["install"]["method"]
         row["actionText"] = (
+            "Systemupdate öffnen" if system_installed else
             "Installiert" if method == "builtin" else
             "Projekt öffnen" if method == "project-link" else
             "Herunterladen" if method == "lokro-design-pack" else
@@ -127,7 +132,8 @@ class StoreBackend(QObject):
             "Installieren"
         )
         row["actionEnabled"] = (
-            method in {"project-link", "lokro-design-pack"}
+            system_installed
+            or method in {"project-link", "lokro-design-pack"}
             or (method in {"flatpak", "flatpak-bundle"} and scope != "system")
         )
         return row
@@ -191,6 +197,10 @@ class StoreBackend(QObject):
         try:
             item = self._find(item_id)
             method = item["install"]["method"]
+            if system_package_installed(item):
+                plan = system_update_plan()
+                self._start_plan(plan)
+                return
             if method == "project-link":
                 self.openUrl(item["install"]["url"])
                 self._set_message(
@@ -210,11 +220,26 @@ class StoreBackend(QObject):
         except InstallError as error:
             self._set_message(f"Nicht möglich: {error}")
             return
+        self._start_plan(plan)
+
+    def _start_plan(self, plan) -> None:
         self._set_busy(True)
         self._set_message(f"{plan.label} …")
         self._process.setProgram(plan.executable)
         self._process.setArguments(list(plan.arguments))
         self._process.start()
+
+    @Slot()
+    def updateAllFlatpaks(self) -> None:
+        if self._busy:
+            return
+        self._start_plan(update_all_flatpaks_plan())
+
+    @Slot()
+    def openSystemUpdater(self) -> None:
+        if self._busy:
+            return
+        self._start_plan(system_update_plan())
 
     @Slot(int, int)
     def _process_finished(self, exit_code: int, _status: int) -> None:
