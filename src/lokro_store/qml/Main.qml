@@ -16,16 +16,23 @@ ApplicationWindow {
 
     property color ink: "#f5f7fb"
     property color muted: "#98a2b3"
-    property color panel: "#11151c"
-    property color raised: "#181e27"
-    property color line: "#29313d"
+    property color panel: "#d911151c"
+    property color raised: "#e6181e27"
+    property color line: "#55647486"
     property color accent: "#ffffff"
     property var selectedItem: null
     property QtObject storeBackend: null
 
     header: ToolBar {
         height: 76
-        background: Rectangle { color: "#0c0f14"; border.color: window.line }
+        background: Rectangle {
+            color: "#e60c0f14"
+            border.color: window.line
+            gradient: Gradient {
+                GradientStop { position: 0.0; color: "#f0151920" }
+                GradientStop { position: 1.0; color: "#e6090b0f" }
+            }
+        }
         RowLayout {
             anchors.fill: parent
             anchors.leftMargin: 26
@@ -90,10 +97,10 @@ ApplicationWindow {
                     }
                 }
                 Rectangle { Layout.fillWidth: true; height: 1; color: window.line }
-                Label { text: "ALPHA 4"; color: window.muted; font.pixelSize: 11 }
+                Label { text: "ALPHA 7"; color: window.muted; font.pixelSize: 11 }
                 Label {
                     Layout.fillWidth: true
-                    text: "Flathub-Apps und geprüfte Projektvorschauen. Designs folgen nach Prüfung."
+                    text: "Flathub-Apps, geprüfte Einzel-Bundles und sichere Design-Packs."
                     color: window.muted
                     wrapMode: Text.WordWrap
                     font.pixelSize: 12
@@ -143,9 +150,9 @@ ApplicationWindow {
                         required property var modelData
                         width: 272
                         height: 200
-                        radius: 16
-                        color: cardMouse.containsMouse ? "#202733" : window.panel
-                        border.color: cardMouse.containsMouse ? "#4b5565" : window.line
+                        radius: 20
+                        color: cardMouse.containsMouse ? "#ed202733" : window.panel
+                        border.color: cardMouse.containsMouse ? "#b8ffffff" : window.line
 
                         MouseArea {
                             id: cardMouse

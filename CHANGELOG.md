@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.0-alpha.7
+
+- Add all 13 ArtCraft Crafting Apps as individually installable, immutable
+  x86_64 Flatpak bundles alongside the optional suite launcher.
+- Pin every upstream version and SHA-256 published in its official release.
+- Give the Store shell a more translucent, high-contrast glass treatment.
+
 ## 0.1.0-alpha.6
 
 - Complete the safe Store-to-`lokro-design-pack` download path.

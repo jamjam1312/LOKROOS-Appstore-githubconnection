@@ -8,6 +8,21 @@ from pathlib import Path
 from lokro_store.catalog import CatalogError, filter_items, load_catalog, loads_catalog, validate_catalog
 
 ROOT = Path(__file__).resolve().parents[1]
+ARTCRAFT_APPS = {
+    "artcraft-photocraft": "ai.storyteller.photocraft",
+    "artcraft-vectorcraft": "ai.storyteller.vectorcraft",
+    "artcraft-filmcraft": "ai.storyteller.filmcraft",
+    "artcraft-lightcraft": "ai.storyteller.lightcraft",
+    "artcraft-pdfcraft": "ai.storyteller.pdfcraft",
+    "artcraft-effectcraft": "ai.storyteller.effectcraft",
+    "artcraft-designcraft": "ai.storyteller.designcraft",
+    "artcraft-figcraft": "ai.storyteller.figcraft",
+    "artcraft-wordcraft": "ai.storyteller.wordcraft",
+    "artcraft-soundcraft": "ai.storyteller.soundcraft",
+    "artcraft-deckcraft": "ai.storyteller.deckcraft",
+    "artcraft-cadcraft": "ai.storyteller.cadcraft",
+    "artcraft-gridcraft": "ai.storyteller.gridcraft",
+}
 
 
 class CatalogTests(unittest.TestCase):
@@ -35,6 +50,17 @@ class CatalogTests(unittest.TestCase):
         candidate["items"][-1]["install"]["url"] = "https://github.com/storytold/craft-launcher/releases/latest"
         with self.assertRaises(CatalogError):
             validate_catalog(candidate)
+
+    def test_artcraft_apps_are_individually_installable_and_pinned(self) -> None:
+        by_id = {item["id"]: item for item in self.catalog["items"]}
+        self.assertLessEqual(ARTCRAFT_APPS.keys(), by_id.keys())
+        for item_id, flatpak_id in ARTCRAFT_APPS.items():
+            install = by_id[item_id]["install"]
+            self.assertEqual(install["method"], "flatpak-bundle")
+            self.assertEqual(install["ref"], flatpak_id)
+            self.assertRegex(install["url"], r"/releases/download/v[0-9]+\.[0-9]+\.[0-9]+/")
+            self.assertTrue(install["url"].endswith("-linux-x86_64.flatpak"))
+            self.assertRegex(install["sha256"], r"^[0-9a-f]{64}$")
 
     def test_unknown_install_method_is_rejected(self) -> None:
         candidate = copy.deepcopy(self.catalog)
